@@ -1,0 +1,8 @@
+in:
+  type: firestore
+  project_id: "syucream-firebase-dev"
+  json_keyfile: credential.json
+  collection: users
+
+out:
+  type: stdout

@@ -1,0 +1,20 @@
+*~
+/pkg/
+/tmp/
+.gradle/
+/classpath/
+build/
+.idea
+/.settings/
+/.metadata/
+.classpath
+.project
+out
+
+# RubyGems
+*.gem
+*.gemspec
+*.iml
+
+# development, debug
+*.json

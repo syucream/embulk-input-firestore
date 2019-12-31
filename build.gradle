@@ -20,8 +20,6 @@ shadowJar {
     exclude 'org/embulk/plugin/**'
 
     dependencies {
-        // include dependency('com.google.guava:guava')
-        // include dependency('com.google.cloud:google-cloud-firestore')
         include 'com.google.guava:guava'
         include 'com.google.cloud:google-cloud-firestore'
     }
@@ -39,49 +37,14 @@ dependencies {
     provided 'org.embulk:embulk-core:0.9.12'
 
     compile 'com.google.cloud:google-cloud-firestore:1.28.0'
-
-    /*
-    compile "com.google.guava:guava:28.0-android"
-    compile ("org.embulk:embulk-core:0.9.12") {
-        exclude group: 'com.google.guava'
-    }
-    compile ("com.google.cloud:google-cloud-firestore:1.28.0") {
-        exclude group: 'com.google.guava'
-    }
-    */
-
-    // configurations.all {
-    //     resolutionStrategy.force "com.google.guava:guava:28.0-jre"
-    //     resolutionStrategy.force "com.google.guava:guava:18.0"
-    // }
-
-    // compile ("com.google.cloud:google-cloud-firestore:1.28.0") {
-    //     exclude group: 'com.google.guava'
-    // }
-
-    // compile "com.google.guava:guava:18.0"
-    // compile "com.google.guava:guava:19.0"
-    // compile "io.grpc:grpc-api:1.16.0"
-    // compile ("io.grpc:grpc-api:1.24.0") {
-    //     exclude group: 'com.google.guava'
-    // }
-
-    // compile "com.google.firebase:firebase-admin:6.10.0"
-    // compile ("com.google.firebase:firebase-admin:6.10.0") {
-    //     exclude group: 'com.google.guava'
-    // }
-
-    // testCompile 'org.embulk:embulk-test:0.9.12'
 }
 
 task classpath(type: Copy, dependsOn: ['jar', 'shadowJar']) {
     doFirst { file('classpath').deleteDir() }
-    // from (configurations.runtime - configurations.provided + files(jar.archiveFile))
 
     from (configurations.runtime
             - configurations.provided
             + configurations.shadow
-            // - files(shadowJar.getIncludedDependencies())
             + files(shadowJar.archiveFile)
             + files(jar.archiveFile))
 

@@ -1,5 +1,7 @@
 # embulk-input-firestore
 
+[![Gem Version](https://badge.fury.io/rb/embulk-input-firestore.svg)](https://badge.fury.io/rb/embulk-input-firestore)
+
 [Google Cloud Firestore](https://firebase.google.com/docs/firestore) input plugin for Embulk. 
 
 You can use filter plugins such as [embulk-filter-expand_json](https://github.com/civitaspo/embulk-filter-expand_json) or [embulk-filter-add_time](https://github.com/treasure-data/embulk-filter-add_time) to convert the json column to typed columns. [Rename filter](http://www.embulk.org/docs/built-in.html#rename-filter-plugin) is also useful to rename the typed columns.

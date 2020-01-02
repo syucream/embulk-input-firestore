@@ -2,7 +2,7 @@ in:
   type: firestore
   project_id: "syucream-firebase-dev"
   json_keyfile: credential.json
-  collection: users
+  sql: "SELECT name FROM users"
 
 out:
   type: stdout

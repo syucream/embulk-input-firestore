@@ -2,6 +2,7 @@ plugins {
     id 'scala'
     id 'com.github.jruby-gradle.base' version '1.6.0'
     id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'cz.alenkacz.gradle.scalafmt' version '1.10.0'
 }
 import com.github.jrubygradle.JRubyExec
 
@@ -11,17 +12,24 @@ configurations {
 
 repositories {
     mavenCentral()
+    mavenLocal()
     jcenter()
 }
 
 // Relocate Guava packages since it's incompatible with Guava's version from Embulk
 shadowJar {
     classifier 'shadow'
-    exclude 'org/embulk/plugin/**'
 
     dependencies {
-        include 'com.google.guava:guava'
-        include 'com.google.cloud:google-cloud-firestore'
+        include dependency('com.google.guava:guava')
+
+        include dependency('com.google.cloud:google-cloud-firestore')
+        include dependency('com.google.firebase:firebase-admin')
+        include dependency('com.syucream:firesql')
+
+        include dependency('io.grpc:grpc-netty-shaded')
+        include dependency('io.grpc:grpc-core')
+        include dependency('io.grpc:grpc-api')
     }
 
     relocate 'com.google.common', 'relocated.com.google.common'
@@ -36,7 +44,9 @@ dependencies {
     compile 'org.embulk:embulk-core:0.9.12'
     provided 'org.embulk:embulk-core:0.9.12'
 
-    compile 'com.google.cloud:google-cloud-firestore:1.28.0'
+    // Should be shadowed
+    compile 'com.google.firebase:firebase-admin:6.11.0'
+    compile 'com.syucream:firesql:0.0.1'
 }
 
 task classpath(type: Copy, dependsOn: ['jar', 'shadowJar']) {
@@ -45,8 +55,8 @@ task classpath(type: Copy, dependsOn: ['jar', 'shadowJar']) {
     from (configurations.runtime
             - configurations.provided
             + configurations.shadow
-            + files(shadowJar.archiveFile)
-            + files(jar.archiveFile))
+            - files(shadowJar.getIncludedDependencies())
+            + files(shadowJar.archiveFile))
 
     into 'classpath'
 }

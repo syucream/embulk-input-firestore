@@ -76,7 +76,7 @@ Gem::Specification.new do |spec|
     spec.name          = "${project.name}"
     spec.version       = "${project.version}"
     spec.authors       = ["Ryo Okubo"]
-    spec.summary       = %[Cloud Firestoreinput plugin for Embulk]
+    spec.summary       = %[Google Cloud Firestore input plugin for Embulk]
     spec.description   = %[Selects records from a table.]
     spec.email         = ["syucream@gmail.com"]
     spec.licenses      = ["Apache-2.0"]

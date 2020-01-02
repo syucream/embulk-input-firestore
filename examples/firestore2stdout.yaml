@@ -1,8 +1,8 @@
 in:
   type: firestore
-  project_id: "syucream-firebase-dev"
-  json_keyfile: credential.json
-  sql: "SELECT id, name FROM users"
+  project_id: "your-project-id"
+  json_keyfile: path/to/credential.json
+  sql: "SELECT id, name, created_at FROM users"
 
 out:
   type: stdout

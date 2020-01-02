@@ -3,6 +3,7 @@ package org.embulk.input.firestore
 import java.io.FileInputStream
 import java.util
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.Firestore
 import com.google.firebase.cloud.FirestoreClient
@@ -20,6 +21,7 @@ case class FirestoreInputPlugin() extends InputPlugin {
   private val TASK_COUNT = 1
 
   private val jsonParser = new JsonParser()
+  private val objectMapper = new ObjectMapper()
 
   override def transaction(
       config: ConfigSource,
@@ -74,7 +76,8 @@ case class FirestoreInputPlugin() extends InputPlugin {
     val col = pageBuilder.getSchema.getColumn(0)
 
     query.get.getDocuments.forEach { d =>
-      pageBuilder.setJson(col, jsonParser.parse(d.toString))
+      val json = objectMapper.writeValueAsString(d.getData)
+      pageBuilder.setJson(col, jsonParser.parse(json))
       pageBuilder.addRecord()
     }
     pageBuilder.finish()

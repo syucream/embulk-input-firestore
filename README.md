@@ -37,10 +37,6 @@ out:
 
 ## Development
 
-## Build
-
-You need to build https://github.com/syucream/FireSQL your own.
-
 ```shell script
 $ ./gradlew gem
 ```
